@@ -1,20 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Box,
-  Grid,
-  Typography,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Container,
-  Button,
-} from '@mui/material';
+import { Box, Grid, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Container, Button } from '@mui/material';
 import html2pdf from 'html2pdf.js';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';  // Import useNavigate
 
 const InvoiceTemplate = ({ savedData, onDone }) => {
   const [formData, setFormData] = useState({});
@@ -43,15 +30,16 @@ const InvoiceTemplate = ({ savedData, onDone }) => {
     setBrand(brandDetails);
     const itemDetails = JSON.parse(localStorage.getItem('invoiceData')) || {};
     setAmount(itemDetails);
-    console.log(itemDetails);
+    console.log(itemDetails)
   }, [savedData]);
 
   const handleDone = () => {
     if (onDone) {
-      onDone({ formData, vendor, date, bank, brand, invoiceData });
+      onDone({ formData, vendor, date, bank, brand,invoiceData });
     }
   };
 
+  // Function to trigger PDF download with improved quality
   const handleDownload = () => {
     const element = document.getElementById('invoice-content');
     const options = {
@@ -71,48 +59,19 @@ const InvoiceTemplate = ({ savedData, onDone }) => {
     html2pdf().from(element).set(options).save();
   };
 
+  // Function to go back to the previous page
   const handleBack = () => {
     navigate(-1); // Navigate to the previous page
   };
 
   return (
     <>
-      <Container
-        id="invoice-content"
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: 'column',
-          px: 2,
-          overflowX: 'hidden', // Prevent horizontal scroll on mobile
-        }}
-      >
-        <h2>Tax Invoice</h2>
-        <Box
-          sx={{
-            width: '100%',
-            maxWidth: '700px',
-            border: '2px solid black',
-            p: { xs: 1, sm: 2 }, // Adjust padding for smaller screens
-          }}
-        >
+      <Container id="invoice-content" sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+        <h2>Tax invoice</h2>
+        <Box sx={{ minWidth: 700, border: '2px solid black' }}>
           {/* Header Section */}
-          <Grid
-            container
-            sx={{
-              borderBottom: '2px solid black',
-              flexDirection: { xs: 'column', sm: 'row' }, // Stacks on mobile
-            }}
-          >
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              sx={{
-                borderRight: { xs: 'none', sm: '2px solid black' },
-                p: { xs: 1, sm: 2 },
-              }}
-            >
+          <Grid container sx={{ borderBottom: '2px solid black' }}>
+            <Grid item xs={6} sx={{ borderRight: '2px solid black', p: 1 }}>
               <Typography variant="body1">
                 <strong>{formData.companyName || 'PRATHI DÉCOR'}</strong>
               </Typography>
@@ -126,24 +85,13 @@ const InvoiceTemplate = ({ savedData, onDone }) => {
               </Typography>
             </Grid>
 
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              sx={{
-                display: 'grid',
-                gridTemplateRows: 'repeat(2, 1fr)',
-                gap: { xs: '8px', sm: '16px' },
-              }}
-            >
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '7px' }}>
+            <Grid item xs={6} sx={{ display: 'grid', gridTemplateRows: 'repeat(2, 1fr)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', borderBottom: '1px solid black', gap: '7px' }}>
                 <div style={{ borderRight: '1px solid black', padding: '8px' }}>
-                  <strong>Invoice No:</strong> <br />
-                  {date.invoiceNo}
+                  <strong>Invoice No:</strong> <br />{date.invoiceNo}
                 </div>
                 <div style={{ padding: '4px' }}>
-                  <strong>Invoice Date:</strong> <br />
-                  {date.invoiceDate}
+                  <strong>Invoice Date:</strong> <br />{date.invoiceDate}
                 </div>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '7px' }}>
@@ -152,30 +100,15 @@ const InvoiceTemplate = ({ savedData, onDone }) => {
                   {date.refNo}
                 </div>
                 <div style={{ padding: '4px' }}>
-                  <strong>Ref Date:</strong> <br />
-                  {date.refDate}
+                  <strong>Ref Date:</strong> <br />{date.refDate}
                 </div>
               </div>
             </Grid>
           </Grid>
 
           {/* Bill To Section */}
-          <Grid
-            container
-            sx={{
-              borderBottom: '1px solid black',
-              flexDirection: { xs: 'column', sm: 'row' },
-            }}
-          >
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              sx={{
-                borderRight: { xs: 'none', sm: '2px solid black' },
-                p: { xs: 1, sm: 2 },
-              }}
-            >
+          <Grid container sx={{ borderBottom: '1px solid black' }}>
+            <Grid item xs={6} sx={{ borderRight: '2px solid black', p: 1 }}>
               <Typography variant="body2">
                 <strong>Bill To:</strong> <br />
                 <strong>{vendor.companyName || 'SRI RAM CONSTRUCTIONS'}</strong> <br />
@@ -187,64 +120,117 @@ const InvoiceTemplate = ({ savedData, onDone }) => {
                 <strong>Mobile :</strong> {vendor.mobilenumber || '+91 86086 15099'}
               </Typography>
             </Grid>
+            <Grid item xs={6} sx={{ p: 2 }}>
+              <Typography variant="body2">&nbsp;</Typography>
+            </Grid>
           </Grid>
 
           {/* Table Section */}
-          <TableContainer
-            component={Paper}
-            sx={{
-              borderBottom: '1px solid black',
-              overflowX: 'auto', // Scroll horizontally on small screens
-            }}
-          >
-            <Table size="small">
+          <TableContainer component={Paper} sx={{ borderBottom: '1px solid black' }}>
+            <Table size="small" sx={{ borderCollapse: 'collapse' }}>
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ border: '1px solid black', fontWeight: 'bold', textAlign: 'center' }}>S.No</TableCell>
-                  <TableCell sx={{ border: '1px solid black', fontWeight: 'bold', textAlign: 'center' }}>
-                    DESCRIPTION
-                  </TableCell>
-                  <TableCell sx={{ border: '1px solid black', fontWeight: 'bold', textAlign: 'center' }}>QTY</TableCell>
-                  <TableCell sx={{ border: '1px solid black', fontWeight: 'bold', textAlign: 'center' }}>RATE</TableCell>
-                  <TableCell sx={{ border: '1px solid black', fontWeight: 'bold', textAlign: 'center' }}>AMOUNT</TableCell>
+                  <TableCell sx={{ border: '1px solid black', fontWeight: 'bold', textAlign: 'center' }}> S.No</TableCell>
+                  <TableCell sx={{ border: '1px solid black', fontWeight: 'bold', textAlign: 'center' }}>DESCRIPTION</TableCell>
+                  <TableCell sx={{ border: '1px solid black', fontWeight: 'bold', textAlign: 'center'  }}>QTY</TableCell>
+                  <TableCell sx={{ border: '1px solid black', fontWeight: 'bold', textAlign: 'center'  }}>RATE</TableCell>
+                  <TableCell sx={{ border: '1px solid black', fontWeight: 'bold' , textAlign: 'center' }}>AMOUNT</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {Array.isArray(amount.items) &&
-                  amount.items.map((item, index) => (
-                    <TableRow key={index}>
-                      <TableCell sx={{ border: '1px solid black', textAlign: 'center' }}>{index + 1}</TableCell>
-                      <TableCell sx={{ border: '1px solid black', textAlign: 'center' }}>{item.description}</TableCell>
-                      <TableCell sx={{ border: '1px solid black', textAlign: 'center' }}>{item.qty}</TableCell>
-                      <TableCell sx={{ border: '1px solid black', textAlign: 'center' }}>{item.rate}</TableCell>
-                      <TableCell sx={{ border: '1px solid black', textAlign: 'center' }}>
-                        {(item.qty * item.rate).toFixed(2)}
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                {Array.isArray(amount.items) && amount.items.map((item, index)=>(
+                  <TableRow key={index}>
+                  <TableCell sx={{ border: '1px solid black', textAlign: 'center'  }}> {index+1}</TableCell>
+                  <TableCell sx={{ border: '1px solid black', textAlign: 'center'  }}>{item.description}</TableCell>
+                  <TableCell sx={{ border: '1px solid black', textAlign: 'center'  }}>{item.qty}</TableCell>
+                  <TableCell sx={{ border: '1px solid black', textAlign: 'center'  }}>{item.rate}</TableCell>
+                  <TableCell sx={{ border: '1px solid black', textAlign: 'center'  }}>{(item.qty * item.rate).toFixed(2)}</TableCell>
+                  </ TableRow>
+                ))}
+
+                {/* <TableRow>
+                  <TableCell sx={{ border: '1px solid black' }}> 1</TableCell>
+                  <TableCell sx={{ border: '1px solid black' }}>Blinds Alteration</TableCell>
+                  <TableCell sx={{ border: '1px solid black' }}>1</TableCell>
+                  <TableCell sx={{ border: '1px solid black' }}>1000.00</TableCell>
+                  <TableCell sx={{ border: '1px solid black' }}>1000.00</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell sx={{ border: '1px solid black' }}>2</TableCell>
+                  <TableCell sx={{ border: '1px solid black' }}>Blinds Service</TableCell>
+                  <TableCell sx={{ border: '1px solid black' }}>1</TableCell>
+                  <TableCell sx={{ border: '1px solid black' }}>1000.00</TableCell>
+                  <TableCell sx={{ border: '1px solid black' }}>1000.00</TableCell>
+                </TableRow> */}
+                <TableRow>
+                  <TableCell colSpan={4} align="right" sx={{ border: '1px solid black', fontWeight: 'bold' }}>SUB TOTAL</TableCell>
+                  <TableCell sx={{ border: '1px solid black', textAlign: 'center' ,fontWeight: 'bold'  }}>{amount.subtotal ? amount.subtotal.toFixed(2) : '0.00'}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell colSpan={4} align="right" sx={{ border: '1px solid black', fontWeight: 'bold' }}>CGST@{amount.gstRate}%</TableCell>
+                  <TableCell sx={{ border: '1px solid black', textAlign: 'center'  }}>{amount.cgst ? amount.cgst.toFixed(2) : '0.00'}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell colSpan={4} align="right" sx={{ border: '1px solid black', fontWeight: 'bold' }}>SGST@{amount.gstRate}%</TableCell>
+                  <TableCell sx={{ border: '1px solid black' , textAlign: 'center' }}>{amount.sgst ? amount.sgst.toFixed(2) : '0.00'}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell colSpan={4} align="right" sx={{ border: '1px solid black', fontWeight: 'bold' }}>IGST@{amount.gstRate*2}%</TableCell>
+                  <TableCell sx={{ border: '1px solid black', textAlign: 'center' }}>{amount.igst ? amount.igst.toFixed(2) : '0.00'}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell colSpan={4} align="right" sx={{ border: '1px solid black', fontWeight: 'bold' }}>
+                    <strong>TOTAL IN INR</strong>
+                  </TableCell>
+                  <TableCell sx={{ border: '1px solid black', textAlign: 'center' }}>
+                    <strong>{amount.total ? amount.total.toFixed(2) : '0.00'}</strong>
+                  </TableCell>
+                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>
-        </Box>
 
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleDownload}
-          sx={{ mt: 2, width: { xs: '100%', sm: 'auto' } }}
-        >
+          <Typography variant="body2" sx={{ mt: 2, pl: 1 }}>
+            <strong>Amount in Words:</strong> {amount.amountInWords || 'zero'}
+          </Typography>
+
+          {/* Footer Section */}
+          <Grid container sx={{ borderTop: '2px solid black', mt: 2 }}>
+            <Grid item xs={6} sx={{ borderRight: '2px solid black', p: 1 }}>
+              <Typography variant="body2">
+                <strong>Bank Account Details: </strong> <br />
+                Account Name: {bank.accountName}<br />
+                Account Number: {bank.accountNumber} <br />
+                Bank Name: {bank.bankName || 'Indian Overseas Bank'} <br />
+                IFSC Code: {bank.ifscCode || 'IFSC'}
+              </Typography>
+            </Grid>
+
+            <Grid item xs={6} sx={{ p: 1, textAlign: 'end' }}>
+              <Typography variant="body2">
+                For <strong>{brand.brandName || 'PRATHI DÉCOR'}</strong>
+              </Typography>
+              <Box sx={{ mt: 7 }}>
+                <Typography variant="body2">{brand.businessType || 'Proprietor'}</Typography>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+        <br/>
+        <br/><br/>
+        <br/>
+        <Typography>…Thank you for your business… </Typography>
+
+       
+      </Container>
+      <Button variant="contained" color="primary" onClick={handleDownload} sx={{ mt: 2 }}>
           Download Invoice
         </Button>
 
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={handleBack}
-          sx={{ mt: 2, ml: { xs: 0, sm: 2 }, width: { xs: '100%', sm: 'auto' } }}
-        >
+        {/* Back Button */}
+        <Button variant="contained" color="secondary" onClick={handleBack} sx={{ mt: 2, ml: 2 }}>
           Back
         </Button>
-      </Container>
     </>
   );
 };
