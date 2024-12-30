@@ -131,20 +131,20 @@ const InvoiceTemplate = ({ savedData, onDone }) => {
               <TableHead>
                 <TableRow>
                   <TableCell sx={{ border: '1px solid black', fontWeight: 'bold', textAlign: 'center' }}> S.No</TableCell>
-                  <TableCell sx={{ border: '1px solid black', fontWeight: 'bold' }}>DESCRIPTION</TableCell>
-                  <TableCell sx={{ border: '1px solid black', fontWeight: 'bold' }}>QTY</TableCell>
-                  <TableCell sx={{ border: '1px solid black', fontWeight: 'bold' }}>RATE</TableCell>
-                  <TableCell sx={{ border: '1px solid black', fontWeight: 'bold' }}>AMOUNT</TableCell>
+                  <TableCell sx={{ border: '1px solid black', fontWeight: 'bold', textAlign: 'center' }}>DESCRIPTION</TableCell>
+                  <TableCell sx={{ border: '1px solid black', fontWeight: 'bold', textAlign: 'center'  }}>QTY</TableCell>
+                  <TableCell sx={{ border: '1px solid black', fontWeight: 'bold', textAlign: 'center'  }}>RATE</TableCell>
+                  <TableCell sx={{ border: '1px solid black', fontWeight: 'bold' , textAlign: 'center' }}>AMOUNT</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {Array.isArray(amount.items) && amount.items.map((item, index)=>(
                   <TableRow key={index}>
-                  <TableCell sx={{ border: '1px solid black' }}> {index+1}</TableCell>
-                  <TableCell sx={{ border: '1px solid black' }}>{item.description}</TableCell>
-                  <TableCell sx={{ border: '1px solid black' }}>{item.qty}</TableCell>
-                  <TableCell sx={{ border: '1px solid black' }}>{item.rate}</TableCell>
-                  <TableCell sx={{ border: '1px solid black' }}>{item.qty * item.rate}</TableCell>
+                  <TableCell sx={{ border: '1px solid black', textAlign: 'center'  }}> {index+1}</TableCell>
+                  <TableCell sx={{ border: '1px solid black', textAlign: 'center'  }}>{item.description}</TableCell>
+                  <TableCell sx={{ border: '1px solid black', textAlign: 'center'  }}>{item.qty}</TableCell>
+                  <TableCell sx={{ border: '1px solid black', textAlign: 'center'  }}>{item.rate}</TableCell>
+                  <TableCell sx={{ border: '1px solid black', textAlign: 'center'  }}>{(item.qty * item.rate).toFixed(2)}</TableCell>
                   </ TableRow>
                 ))}
 
@@ -164,22 +164,26 @@ const InvoiceTemplate = ({ savedData, onDone }) => {
                 </TableRow> */}
                 <TableRow>
                   <TableCell colSpan={4} align="right" sx={{ border: '1px solid black', fontWeight: 'bold' }}>SUB TOTAL</TableCell>
-                  <TableCell sx={{ border: '1px solid black' }}>{amount.subtotal}</TableCell>
+                  <TableCell sx={{ border: '1px solid black', textAlign: 'center' ,fontWeight: 'bold'  }}>{amount.subtotal ? amount.subtotal.toFixed(2) : '0.00'}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell colSpan={4} align="right" sx={{ border: '1px solid black', fontWeight: 'bold' }}>CGST@{amount.gstRate}%</TableCell>
-                  <TableCell sx={{ border: '1px solid black' }}>{amount.cgst}</TableCell>
+                  <TableCell sx={{ border: '1px solid black', textAlign: 'center'  }}>{amount.cgst ? amount.cgst.toFixed(2) : '0.00'}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell colSpan={4} align="right" sx={{ border: '1px solid black', fontWeight: 'bold' }}>SGST@{amount.gstRate}%</TableCell>
-                  <TableCell sx={{ border: '1px solid black' }}>{amount.sgst}</TableCell>
+                  <TableCell sx={{ border: '1px solid black' , textAlign: 'center' }}>{amount.sgst ? amount.sgst.toFixed(2) : '0.00'}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell colSpan={4} align="right" sx={{ border: '1px solid black', fontWeight: 'bold' }}>IGST@{amount.gstRate*2}%</TableCell>
+                  <TableCell sx={{ border: '1px solid black', textAlign: 'center' }}>{amount.igst ? amount.igst.toFixed(2) : '0.00'}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell colSpan={4} align="right" sx={{ border: '1px solid black', fontWeight: 'bold' }}>
                     <strong>TOTAL IN INR</strong>
                   </TableCell>
-                  <TableCell sx={{ border: '1px solid black' }}>
-                    <strong>{amount.total}</strong>
+                  <TableCell sx={{ border: '1px solid black', textAlign: 'center' }}>
+                    <strong>{amount.total ? amount.total.toFixed(2) : '0.00'}</strong>
                   </TableCell>
                 </TableRow>
               </TableBody>
