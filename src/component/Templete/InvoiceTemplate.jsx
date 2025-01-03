@@ -107,23 +107,23 @@ const InvoiceTemplate = ({ savedData, onDone }) => {
           </Grid>
 
           {/* Bill To Section */}
-          <Grid container sx={{ borderBottom: '1px solid black' }}>
-            <Grid item xs={6} sx={{ borderRight: '2px solid black', p: 1 }}>
-              <Typography variant="body2">
-                <strong>Bill To:</strong> <br />
-                <strong>{vendor.companyName || 'SRI RAM CONSTRUCTIONS'}</strong> <br />
-                {vendor.address || '237A, 7th Street, Sempon Nagar, Perungudi,'} <br />
-                <strong>{`${vendor.district} - ${vendor.pincode}` || 'Chennai - 600096.'}</strong> <br />
-                <strong>{vendor.state || 'Tamil Nadu'}</strong> <br />
-                <strong>GSTIN :</strong> {vendor.gstin || '33EEPPP3507A1ZQ'} <br />
-                <strong>E-Mail :</strong> {vendor.emailId || 'pradeepblinds@gmail.com'} <br />
-                <strong>Mobile :</strong> {vendor.mobilenumber || '+91 86086 15099'}
-              </Typography>
-            </Grid>
-            <Grid item xs={6} sx={{ p: 2 }}>
-              <Typography variant="body2">&nbsp;</Typography>
-            </Grid>
-          </Grid>
+         <Grid container sx={{ borderBottom: '1px solid black' }}>
+  <Grid item xs={12} sm={6} sx={{ borderRight: '2px solid black', p: 1 }}>
+    <Typography variant="body2">
+      <strong>Bill To:</strong> <br />
+      <strong>{vendor.companyName || 'SRI RAM CONSTRUCTIONS'}</strong> <br />
+      {vendor.address || '237A, 7th Street, Sempon Nagar, Perungudi,'} <br />
+      <strong>{`${vendor.district} - ${vendor.pincode}` || 'Chennai - 600096.'}</strong> <br />
+      <strong>{vendor.state || 'Tamil Nadu'}</strong> <br />
+      <strong>GSTIN :</strong> {vendor.gstin || '33EEPPP3507A1ZQ'} <br />
+      <strong>E-Mail :</strong> {vendor.emailId || 'pradeepblinds@gmail.com'} <br />
+      <strong>Mobile :</strong> {vendor.mobilenumber || '+91 86086 15099'}
+    </Typography>
+  </Grid>
+  <Grid item xs={12} sm={6} sx={{ p: 2 }}>
+    <Typography variant="body2">&nbsp;</Typography>
+  </Grid>
+</Grid>
 
           {/* Table Section */}
           <TableContainer component={Paper} sx={{ borderBottom: '1px solid black' }}>
@@ -148,20 +148,7 @@ const InvoiceTemplate = ({ savedData, onDone }) => {
                   </ TableRow>
                 ))}
 
-                {/* <TableRow>
-                  <TableCell sx={{ border: '1px solid black' }}> 1</TableCell>
-                  <TableCell sx={{ border: '1px solid black' }}>Blinds Alteration</TableCell>
-                  <TableCell sx={{ border: '1px solid black' }}>1</TableCell>
-                  <TableCell sx={{ border: '1px solid black' }}>1000.00</TableCell>
-                  <TableCell sx={{ border: '1px solid black' }}>1000.00</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell sx={{ border: '1px solid black' }}>2</TableCell>
-                  <TableCell sx={{ border: '1px solid black' }}>Blinds Service</TableCell>
-                  <TableCell sx={{ border: '1px solid black' }}>1</TableCell>
-                  <TableCell sx={{ border: '1px solid black' }}>1000.00</TableCell>
-                  <TableCell sx={{ border: '1px solid black' }}>1000.00</TableCell>
-                </TableRow> */}
+               
                 <TableRow>
                   <TableCell colSpan={4} align="right" sx={{ border: '1px solid black', fontWeight: 'bold' }}>SUB TOTAL</TableCell>
                   <TableCell sx={{ border: '1px solid black', textAlign: 'center' ,fontWeight: 'bold'  }}>{amount.subtotal ? amount.subtotal.toFixed(2) : '0.00'}</TableCell>
